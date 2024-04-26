@@ -1,7 +1,7 @@
 package cn.luischen.service.log.impl;
 
 import cn.luischen.constant.ErrorConstant;
-import cn.luischen.dao.LogDao;
+import cn.luischen.dao.LogMapper;
 import cn.luischen.exception.BusinessException;
 import cn.luischen.model.LogDomain;
 import cn.luischen.service.log.LogService;
@@ -20,7 +20,7 @@ import java.util.List;
 public class LogServiceImpl implements LogService {
 
     @Autowired
-    private LogDao logDao;
+    private LogMapper logMapper;
 
     @Override
     public void addLog(String action, String data, String ip, Integer authorId) {
@@ -29,20 +29,20 @@ public class LogServiceImpl implements LogService {
         logDomain.setIp(ip);
         logDomain.setData(data);
         logDomain.setAction(action);
-        logDao.addLog(logDomain);
+        logMapper.addLog(logDomain);
     }
 
     @Override
     public void deleteLogById(Integer id) {
         if (null == id)
             throw BusinessException.withErrorCode(ErrorConstant.Common.PARAM_IS_EMPTY);
-        logDao.deleteLogById(id);
+        logMapper.deleteLogById(id);
     }
 
     @Override
     public PageInfo<LogDomain> getLogs(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<LogDomain> logs = logDao.getLogs();
+        List<LogDomain> logs = logMapper.getLogs();
         PageInfo<LogDomain> pageInfo = new PageInfo<>(logs);
         return pageInfo;
     }

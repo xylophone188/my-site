@@ -10,7 +10,7 @@ import java.util.List;
  * Created by winterchen on 2018/4/29.
  */
 @Mapper
-public interface LogDao {
+public interface LogMapper {
 
     /**
      * 添加日志
